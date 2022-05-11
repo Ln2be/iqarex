@@ -13,7 +13,7 @@ router.get("/posts", async function (req, res, next) {
 //   // res.render('index', { title: 'Express' });
 //   const posts = await models.DBPost.deleteMany({});
 //   res.json(posts);
-// });
+// });\
 
 router.get("/delete", async function (req, res, next) {
   // res.render('index', { title: 'Express' });
