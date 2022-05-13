@@ -22,4 +22,10 @@ router.get("/delete", async function (req, res, next) {
   res.json(posts);
 });
 
+router.get("/deletecodes", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const posts = await models.DBUserCode.deleteMany({});
+  res.json(posts);
+});
+
 module.exports = router;
