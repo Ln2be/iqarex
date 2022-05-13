@@ -28,4 +28,17 @@ router.get("/deletecodes", async function (req, res, next) {
   res.json(posts);
 });
 
+router.get("/users", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const posts = await models.DBUser.find({});
+  res.json(posts);
+});
+
+router.get("/deleteuser", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const { id } = req.query;
+  const posts = await models.DBUser.deleteOne({ _id: id });
+  res.json(posts);
+});
+
 module.exports = router;
