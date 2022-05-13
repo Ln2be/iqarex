@@ -41,4 +41,11 @@ router.get("/deleteuser", async function (req, res, next) {
   res.json(posts);
 });
 
+router.get("/updateuser", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const { id } = req.query;
+  const posts = await models.DBUser.updateOne({ _id: id }, req.body);
+  res.json(posts);
+});
+
 module.exports = router;
