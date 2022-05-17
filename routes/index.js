@@ -9,6 +9,13 @@ router.get("/posts", async function (req, res, next) {
   res.json(posts);
 });
 
+router.get("/updatepost", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });{
+  const { id } = req.query;
+  const posts = await models.DBPost.updateOne({ _id: id }, req.query);
+  res.json(posts);
+});
+
 // router.get("/deleteall", async function (req, res, next) {
 //   // res.render('index', { title: 'Express' });
 //   const posts = await models.DBPost.deleteMany({});
