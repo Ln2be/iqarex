@@ -9,6 +9,7 @@ var debug = require("debug")("iqarex:server");
 var http = require("http");
 var models = require("../lib/mongo");
 var fs = require("fs");
+
 /**
  * Get port from environment and store in Express.
  */
@@ -20,26 +21,76 @@ app.set("port", port);
  * Create HTTP server.
  */
 
-// setInterval(() => {
-//   const date = Date.now();
-//   const hour = new Date(date).getHours();
-//   if (hour == 16) {
-//     // savethedb();
-//     console.log(models.Models);
-//   }
-// }, 2000);
+var lastday = 0;
+const basedir = '"/var/www/iqar/backup/"';
 
-// function savethedb() {
-//   const date = Date.now();
-//   var dir = "/home/elhassen/Downloads/images/dir" + date;
-//   if (!fs.existsSync(dir)) {
-//     fs.mkdirSync(dir);
-//   }
+setInterval(() => {
+  const date = Date.now();
+  const hour = new Date(date).getHours();
 
-//   for (const Model in models.Models) {
-//     console.log(Model);
-//   }
-// }
+  // should not excute this function in the same day
+  var differentday = new Date(date).getDay() != lastday;
+
+  if (hour == 11 && differentday) {
+    // set the function is excuted today
+    lastday = new Date(date).getDay();
+
+    savethedb();
+    // console.log(models.Models);
+
+    deletebackup();
+
+    // rmdbbackup();
+  }
+}, 4000);
+
+// backup db everyday
+async function savethedb() {
+  const date = Date.now();
+
+  // create a backup directory
+  var dir = basedir + "dir" + date;
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+  // save the backup url in the database to delete it if it is old
+  const backup = await new models.DBBackup({ url: dir }).save();
+
+  // store all the collections in different files
+  for (const Model in models.Models) {
+    const posts = await models.Models[Model].find({});
+    const name = Model + "";
+    fs.writeFileSync(
+      dir + "/" + name + ".json",
+      Buffer.from(JSON.stringify(posts))
+    );
+    console.log(name);
+  }
+}
+
+// delete old backups 2 months ago
+
+async function deletebackup() {
+  // the backup is allowed to stay for 2 months
+  const max = 3;
+  const backups = await models.DBBackup.find({}).sort({ createdAt: 1 });
+  if (backups.length >= max) {
+    // number of file to delete
+    const nd = backups.length - max;
+    for (var i = 0; i < nd; i++) {
+      const { _id, url } = backups[i];
+      fs.rmdirSync(url, { recursive: true });
+      const rmbackup = await models.DBBackup.deleteOne({ _id: _id });
+    }
+  }
+}
+
+//
+
+async function rmdbbackup() {
+  const backups = await models.DBBackup.deleteMany({});
+  console.log(backups);
+}
 
 var server = http.createServer(app);
 
