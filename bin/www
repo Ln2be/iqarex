@@ -20,9 +20,10 @@ app.set("port", port);
 /**
  * Create HTTP server.
  */
-
+var firstTime = true;
 var lastday = 0;
 const basedir = "/var/www/iqar/backup/";
+// const basedir = "/home/elhassen/Downloads/images/backup/";
 
 setInterval(() => {
   const date = Date.now();
@@ -31,7 +32,10 @@ setInterval(() => {
   // should not excute this function in the same day
   var differentday = new Date(date).getDay() != lastday;
 
-  if (hour == 11 && differentday) {
+  if ((hour == 0 && differentday) || firstTime) {
+    // if the firstTime server run after chut down do it
+    firstTime = false;
+
     // set the function is excuted today
     lastday = new Date(date).getDay();
 
@@ -42,7 +46,7 @@ setInterval(() => {
 
     // rmdbbackup();
   }
-}, 4000);
+}, 1000);
 
 // backup db everyday
 async function savethedb() {
