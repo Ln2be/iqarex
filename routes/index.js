@@ -55,4 +55,10 @@ router.get("/updateuser", async function (req, res, next) {
   res.json(posts);
 });
 
+router.get("/backups", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const posts = await models.DBBackup.find({}).sort({ createdAt: -1 });
+  res.json(posts);
+});
+
 module.exports = router;
