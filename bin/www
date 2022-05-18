@@ -76,7 +76,7 @@ async function savethedb() {
 
 async function deletebackup() {
   // the backup is allowed to stay for 2 months
-  const max = 3;
+  const max = 60;
   const backups = await models.DBBackup.find({}).sort({ createdAt: 1 });
   if (backups.length >= max) {
     // number of file to delete
