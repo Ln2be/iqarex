@@ -22,7 +22,7 @@ app.set("port", port);
  */
 
 var lastday = 0;
-const basedir = '"/var/www/iqar/backup/"';
+const basedir = "/var/www/iqar/backup/";
 
 setInterval(() => {
   const date = Date.now();
