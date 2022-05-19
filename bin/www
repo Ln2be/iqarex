@@ -22,8 +22,8 @@ app.set("port", port);
  */
 var firstTime = true;
 var lastday = 0;
-const basedir = "/var/www/iqar/backup/";
-// const basedir = "/home/elhassen/Downloads/images/backup/";
+// const basedir = "/var/www/iqar/backup/";
+const basedir = "/home/elhassen/Downloads/images/backup/";
 
 setInterval(() => {
   const date = Date.now();
@@ -32,7 +32,7 @@ setInterval(() => {
   // should not excute this function in the same day
   var differentday = new Date(date).getDay() != lastday;
 
-  if ((hour == 0 && differentday) || firstTime) {
+  if ((hour == 12 && differentday) || firstTime) {
     // if the firstTime server run after chut down do it
     firstTime = false;
 
