@@ -23,13 +23,15 @@ app.set("port", port);
 var firstTime = true;
 var lastday = 0;
 
-const isProduction = process.env.NODE_ENV === "production";
+// const isProduction = process.env.NODE_ENV === "production";
 
-const devUrl = "/home/elhassen/Downloads/backup/";
+// const devUrl = "/home/elhassen/Downloads/backup/";
 
 const prodUrl = "/var/www/iqar/backup/";
 
-const basedir = isProduction ? prodUrl : devUrl;
+const basedir = prodUrl;
+
+// const basedir = isProduction ? prodUrl : devUrl;
 // const site = isProduction ? prodSite : devSite;
 // const basedir = "/var/www/iqar/backup/";
 // const basedir = "/home/elhassen/Downloads/images/backup/";
