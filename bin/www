@@ -20,35 +20,25 @@ app.set("port", port);
 /**
  * Create HTTP server.
  */
-var firstTime = true;
-var lastday = 0;
+
 
 // const isProduction = process.env.NODE_ENV === "production";
 
-// const devUrl = "/home/elhassen/Downloads/backup/";
+// const basedir = "/home/elhassen/Downloads/backup/";
 
-const prodUrl = "/var/www/iqar/backup/";
+// const prodUrl =
 
-const basedir = prodUrl;
+const basedir = "/var/www/iqar/backup/";
 
-// const basedir = isProduction ? prodUrl : devUrl;
-// const site = isProduction ? prodSite : devSite;
-// const basedir = "/var/www/iqar/backup/";
-// const basedir = "/home/elhassen/Downloads/images/backup/";
+
 
 setInterval(() => {
   const date = Date.now();
   const hour = new Date(date).getHours();
 
-  // should not excute this function in the same day
-  var differentday = new Date(date).getDay() != lastday;
 
-  if ((hour == 0 && differentday) || firstTime) {
-    // if the firstTime server run after chut down do it
-    firstTime = false;
+  if ((hour == 0) {
 
-    // set the function is excuted today
-    lastday = new Date(date).getDay();
 
     savethedb();
     // console.log(models.Models);
@@ -57,7 +47,7 @@ setInterval(() => {
 
     // rmdbbackup();
   }
-}, 1000);
+}, 1000*60*30);
 
 // backup db everyday
 async function savethedb() {

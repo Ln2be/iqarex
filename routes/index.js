@@ -42,6 +42,12 @@ router.get("/users", async function (req, res, next) {
   res.json(posts);
 });
 
+router.get("/reps", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const posts = await models.DBUser.find({ role: "rep" });
+  res.json(posts);
+});
+
 router.get("/deleteuser", async function (req, res, next) {
   // res.render('index', { title: 'Express' });
   const { id } = req.query;
@@ -80,6 +86,26 @@ router.get("/convertdep", async function (req, res, next) {
   });
 
   const posts = await models.DBPost.find({}).sort({ createdAt: -1 });
+
+  res.json(posts);
+});
+
+router.get("/convertdepusers", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const oposts = await models.DBUser.find({}).sort({ createdAt: -1 });
+
+  // var oposts = JSON.parse(sposts);
+  const nposts = oposts.map(async (post) => {
+    // the field departement should be an array
+
+    const departements = [post.departement];
+    const posts = await models.DBUser.updateOne(
+      { _id: post._id },
+      { departements: departements }
+    );
+  });
+
+  const posts = await models.DBUser.find({}).sort({ createdAt: -1 });
 
   res.json(posts);
 });
