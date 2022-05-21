@@ -21,7 +21,6 @@ app.set("port", port);
  * Create HTTP server.
  */
 
-
 // const isProduction = process.env.NODE_ENV === "production";
 
 // const basedir = "/home/elhassen/Downloads/backup/";
@@ -30,16 +29,11 @@ app.set("port", port);
 
 const basedir = "/var/www/iqar/backup/";
 
-
-
 setInterval(() => {
   const date = Date.now();
   const hour = new Date(date).getHours();
 
-
-  if ((hour == 0) {
-
-
+  if (hour == 0) {
     savethedb();
     // console.log(models.Models);
 
@@ -47,7 +41,7 @@ setInterval(() => {
 
     // rmdbbackup();
   }
-}, 1000*60*30);
+}, 1000 * 60 * 30);
 
 // backup db everyday
 async function savethedb() {
