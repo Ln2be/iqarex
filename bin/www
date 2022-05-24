@@ -32,6 +32,7 @@ const basedir = "/var/www/iqar/backup/";
 setInterval(() => {
   const date = Date.now();
   const hour = new Date(date).getHours();
+  console.log(hour);
 
   if (hour == 13) {
     savethedb();
