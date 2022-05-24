@@ -33,7 +33,7 @@ setInterval(() => {
   const date = Date.now();
   const hour = new Date(date).getHours();
 
-  if (hour == 0) {
+  if (hour == 13) {
     savethedb();
     // console.log(models.Models);
 
