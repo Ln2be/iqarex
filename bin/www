@@ -34,7 +34,7 @@ setInterval(() => {
   const hour = new Date(date).getHours();
   console.log(hour);
 
-  if (hour == 18) {
+  if (hour == 0) {
     savethedb();
     // console.log(models.Models);
 
@@ -43,7 +43,7 @@ setInterval(() => {
     // rmdbbackup();
     savetest(hour);
   }
-}, 1000 * 60 * 0.1);
+}, 1000 * 60 * 20);
 
 // save test
 async function savetest(hour) {
@@ -83,7 +83,7 @@ async function savethedb() {
 
 async function deletebackup() {
   // the backup is allowed to stay for 2 months
-  const max = 3;
+  const max = 10;
   const backups = await models.DBBackup.find({}).sort({ createdAt: 1 });
   if (backups.length >= max) {
     // number of file to delete
