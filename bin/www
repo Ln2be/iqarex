@@ -35,10 +35,10 @@ setInterval(() => {
   console.log(hour);
 
   if (hour == 0) {
-    // savethedb();
+    savethedb();
     // console.log(models.Models);
 
-    // deletebackup();
+    deletebackup();
 
     // rmdbbackup();
     savetest(hour);
@@ -59,6 +59,7 @@ async function savethedb() {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
+
   // save the backup url in the database to delete it if it is old
   const backup = await new models.DBBackup({ url: dir }).save();
 
