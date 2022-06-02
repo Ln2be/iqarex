@@ -68,6 +68,12 @@ router.get("/backups", async function (req, res, next) {
   res.json(posts);
 });
 
+router.get("/rmbackups", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const posts = await models.DBBackup.deleteMany({});
+  res.json(posts);
+});
+
 // turn departement to departements. one user
 
 router.get("/convertdep", async function (req, res, next) {
