@@ -34,7 +34,7 @@ setInterval(() => {
   const hour = new Date(date).getHours();
   console.log(hour);
 
-  if (hour == 18) {
+  if (true) {
     // savethedb();
     // console.log(models.Models);
 
