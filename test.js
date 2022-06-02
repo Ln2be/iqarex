@@ -1,8 +1,5 @@
-var post = {
-  field1: "1",
-  field2: "2",
-};
+const date1 = new Date("1-1-2020");
+const date2 = new Date("1-1-2021");
+const daysToMs = 1000 * 60 * 60 * 24;
 
-post.field3 = "3";
-
-console.log(post);
+console.log((date2 - date1) / daysToMs);

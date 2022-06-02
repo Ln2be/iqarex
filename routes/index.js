@@ -130,4 +130,9 @@ router.get("/restorepost", async function (req, res, next) {
   res.send(postsup);
 });
 
+router.get("/tests", async (req, res, next) => {
+  const tests = await models.DBTest.find({});
+  res.send(tests);
+});
+
 module.exports = router;

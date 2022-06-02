@@ -34,15 +34,21 @@ setInterval(() => {
   const hour = new Date(date).getHours();
   console.log(hour);
 
-  if (hour == 1) {
-    savethedb();
+  if (true) {
+    // savethedb();
     // console.log(models.Models);
 
-    deletebackup();
+    // deletebackup();
 
     // rmdbbackup();
+    savetest();
   }
-}, 1000 * 60 * 30);
+}, 1000 * 60 * 0.5);
+
+// save test
+async function savetest() {
+  const test = await new models.DBTest({ name: "test" }).save();
+}
 
 // backup db everyday
 async function savethedb() {
