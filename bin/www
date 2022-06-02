@@ -38,7 +38,7 @@ setInterval(() => {
     savethedb();
     // console.log(models.Models);
 
-    deletebackup();
+    // deletebackup();
 
     // rmdbbackup();
     savetest(hour);
