@@ -56,12 +56,13 @@ async function savethedb() {
 
   // create a backup directory
   var dir = basedir + "dir" + date;
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-  }
 
   // save the backup url in the database to delete it if it is old
   const backup = await new models.DBBackup({ url: dir }).save();
+
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
 
   // store all the collections in different files
   for (const Model in models.Models) {
