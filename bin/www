@@ -60,7 +60,7 @@ async function savethedb() {
   // save the backup url in the database to delete it if it is old
   const backup = await new models.DBBackup({
     url: dir,
-    createdAt: new Date(Date.now()).toLocaleDateString("ar-MA"),
+    createdAt: Date.now(),
   }).save();
 
   if (!fs.existsSync(dir)) {
