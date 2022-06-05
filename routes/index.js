@@ -116,6 +116,12 @@ router.get("/convertdepusers", async function (req, res, next) {
   res.json(posts);
 });
 
+router.get("/usertel", async function (req, res, next) {
+  const { id, tel } = req.query;
+
+  const user = await models.DBUser.updateOne({ _id: id }, { tel: tel });
+  res.send(user);
+});
 router.get("/restorepost", async function (req, res, next) {
   // delete all first
   const deleted = await models.DBPost.deleteMany({});
