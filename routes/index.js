@@ -133,12 +133,12 @@ router.get("/restorepost", async function (req, res, next) {
   // const posts = await models.DBBackup.find({}).sort({ createdAt: -1 });
   const jsons = JSON.parse(posts.toString());
 
-  // jsons.map(async (json) => {
-  //   delete json._id;
-  //   const postsup = await new models.DBPost(json).save();
-  // });
+  jsons.map(async (json) => {
+    delete json._id;
+    const postsup = await new models.DBPost(json).save();
+  });
 
-  // const postsup = await models.DBPost.find({});
+  const postsup = await models.DBPost.find({});
   res.send(jsons);
 });
 
