@@ -127,19 +127,19 @@ router.get("/restorepost", async function (req, res, next) {
   const deleted = await models.DBPost.deleteMany({});
   // get the latest backup for the database backup model! I hope remain undemaged
   const backups = await models.DBBackup.find({}).sort({ createdAt: -1 });
-  const url = backups[backups.length - 10].url;
+  const url = backups[0].url;
 
   const posts = fs.readFileSync(url + "/DBPost.json");
   // const posts = await models.DBBackup.find({}).sort({ createdAt: -1 });
   const jsons = JSON.parse(posts.toString());
 
-  jsons.map(async (json) => {
-    delete json._id;
-    const postsup = await new models.DBPost(json).save();
-  });
+  // jsons.map(async (json) => {
+  //   delete json._id;
+  //   const postsup = await new models.DBPost(json).save();
+  // });
 
-  const postsup = await models.DBPost.find({});
-  res.send(postsup);
+  // const postsup = await models.DBPost.find({});
+  res.send(jsons);
 });
 
 router.get("/tests", async (req, res, next) => {
