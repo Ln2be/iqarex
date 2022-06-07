@@ -152,4 +152,9 @@ router.get("/deletetracks", async (req, res, next) => {
   res.send(tests);
 });
 
+router.get("/deletechances", async (req, res, next) => {
+  const tests = await models.DBChance.deleteMany({});
+  res.send(tests);
+});
+
 module.exports = router;
