@@ -147,4 +147,9 @@ router.get("/tests", async (req, res, next) => {
   res.send(tests);
 });
 
+router.get("/deletetracks", async (req, res, next) => {
+  const tests = await models.DBTrack.deleteMany({});
+  res.send(tests);
+});
+
 module.exports = router;
