@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var models = require("../lib/mongo");
 var fs = require("fs");
+const { DBPost } = require("../lib/mongo");
 
 /* GET home page. */
 router.get("/posts", async function (req, res, next) {
@@ -155,6 +156,19 @@ router.get("/deletetracks", async (req, res, next) => {
 router.get("/deletechances", async (req, res, next) => {
   const tests = await models.DBChance.deleteMany({});
   res.send(tests);
+});
+
+router.get("/addhidden", async (req, res) => {
+  const posts = await models.DBPost.find({});
+  let result;
+  for (let post of posts) {
+    console.log(post._id);
+    result = await models.DBPost.updateOne(
+      { _id: post._id },
+      { hidden: false }
+    );
+  }
+  res.send(result);
 });
 
 module.exports = router;
