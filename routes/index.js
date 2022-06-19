@@ -171,4 +171,12 @@ router.get("/addhidden", async (req, res) => {
   res.send(result);
 });
 
+// change the role of the user
+router.get("/userole", async function (req, res, next) {
+  const { id, role } = req.query;
+
+  const user = await models.DBUser.updateOne({ _id: id }, { role: role });
+  res.send(user);
+});
+
 module.exports = router;
