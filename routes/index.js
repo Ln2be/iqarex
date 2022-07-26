@@ -179,4 +179,37 @@ router.get("/userole", async function (req, res, next) {
   res.send(user);
 });
 
+// correct prices
+router.get("/coprices", async (req, res) => {
+  const posts = await models.DBPost.find({});
+  let newPrice;
+  for (let post of posts) {
+    const price = post.price;
+    const type = post.type;
+
+    if (type == "demandRent" || type == "offerRent" || type == "stay") {
+      if (price > 1000) {
+        newPrice = price / 1000;
+      } else {
+        newPrice = price;
+      }
+    }
+
+    if (type == "buying" || type == "selling") {
+      if (price < 200000 && price > 200) {
+        newPrice = price / 1000;
+      } else if (price > 1000000) {
+        newPrice = price / 1000000;
+      } else {
+        newPrice = price;
+      }
+    }
+
+    await models.DBPost.updateOne({ _id: post._id }, { price: newPrice });
+  }
+
+  const postsr = await models.DBPost.find({});
+  res.send(postsr);
+});
+
 module.exports = router;
