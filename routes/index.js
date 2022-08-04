@@ -212,4 +212,19 @@ router.get("/coprices", async (req, res) => {
   res.send(postsr);
 });
 
+router.get("/cocompared", async (req, res) => {
+  const posts = await models.DBPost.find({});
+  let result;
+  for (let post of posts) {
+    console.log(post.comparedTo);
+    result = await models.DBPost.updateOne(
+      { _id: post._id },
+      { comparedTo: [] }
+    );
+  }
+  // const ini = ["Hi"];
+  // await models.DBPost.updateMany({}, { comparedTo: ini });
+  res.send("done with Hi");
+});
+
 module.exports = router;
