@@ -232,19 +232,21 @@ router.get("/cocompared", async (req, res) => {
 });
 
 router.get("/addCounter", async (req, res) => {
+  const postCounter = await models.DBCounter.findOne({ name: "posts" });
 
-const postCounter = await models.DBCounter.findOne({name:"posts"})
+  const pCounter = postCounter
+    ? postCounter
+    : await new models.DBCounter({ name: "posts" }).save();
 
-const pCounter = postCounter? postCounter : await models.DBCounter.save({name:"posts"})
-
+  let counter = pCounter.counter;
+  console.log(pCounter);
   const posts = await models.DBPost.find({});
   let result;
   for (let post of posts) {
-
-    pCounter++
+    counter++;
     result = await models.DBPost.updateOne(
       { _id: post._id },
-      { count: pCounter }
+      { count: counter }
     );
   }
   // const ini = ["Hi"];
