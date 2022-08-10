@@ -249,6 +249,7 @@ router.get("/addCounter", async (req, res) => {
       { count: counter }
     );
   }
+  await new models.DBCounter.updateOne({ name: "posts" }, { count: counter });
   // const ini = ["Hi"];
   // await models.DBPost.updateMany({}, { comparedTo: ini });
   res.send("done with Hi");
