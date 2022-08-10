@@ -79,14 +79,18 @@ router.get("/rmbackups", async function (req, res, next) {
 
 router.get("/convertdep", async function (req, res, next) {
   // res.render('index', { title: 'Express' });
-  const oposts = await models.DBPost.find({}).sort({ createdAt: -1 });
+  const oposts = await models.DBUser.find({}).sort({ createdAt: -1 });
 
   // var oposts = JSON.parse(sposts);
   const nposts = oposts.map(async (post) => {
     // the field departement should be an array
 
-    const departements = [post.departement];
-    const posts = await models.DBPost.updateOne(
+    const ran = Math.round(Math.random() * 1);
+
+    const newDep = ran == 0 ? "Arafat" : "Ksar";
+
+    const departements = [post.departement ? post.departement : newDep];
+    const posts = await models.DBUser.updateOne(
       { _id: post._id },
       { departements: departements }
     );
@@ -220,6 +224,27 @@ router.get("/cocompared", async (req, res) => {
     result = await models.DBPost.updateOne(
       { _id: post._id },
       { comparedTo: [] }
+    );
+  }
+  // const ini = ["Hi"];
+  // await models.DBPost.updateMany({}, { comparedTo: ini });
+  res.send("done with Hi");
+});
+
+router.get("/addCounter", async (req, res) => {
+
+const postCounter = await models.DBCounter.findOne({name:"posts"})
+
+const pCounter = postCounter? postCounter : await models.DBCounter.save({name:"posts"})
+
+  const posts = await models.DBPost.find({});
+  let result;
+  for (let post of posts) {
+
+    pCounter++
+    result = await models.DBPost.updateOne(
+      { _id: post._id },
+      { count: pCounter }
     );
   }
   // const ini = ["Hi"];
