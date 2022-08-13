@@ -7,7 +7,7 @@ const { DBPost } = require("../lib/mongo");
 /* GET home page. */
 router.get("/posts", async function (req, res, next) {
   // res.render('index', { title: 'Express' });
-  const posts = await models.DBPost.find({});
+  const posts = await models.DBPost.find({}).sort({ createdAt: -1 });
   res.json(posts);
 });
 
@@ -238,18 +238,19 @@ router.get("/addCounter", async (req, res) => {
     ? postCounter
     : await new models.DBCounter({ name: "posts" }).save();
 
-  let counter = pCounter.counter;
-  console.log(pCounter);
-  const posts = await models.DBPost.find({});
+  let counter = 0;
+  // console.log(pCounter);
+  const posts = await models.DBPost.find({}).sort({ createdAt: +1 });
   let result;
+  console.log(posts.length);
   for (let post of posts) {
-    counter++;
+    counter = counter + 1;
     result = await models.DBPost.updateOne(
       { _id: post._id },
       { count: counter }
     );
   }
-  await new models.DBCounter.updateOne({ name: "posts" }, { count: counter });
+  await models.DBCounter.updateOne({ name: "posts" }, { counter: counter });
   // const ini = ["Hi"];
   // await models.DBPost.updateMany({}, { comparedTo: ini });
   res.send("done with Hi");
