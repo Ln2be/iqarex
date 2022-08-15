@@ -39,7 +39,7 @@ router.get("/deletecodes", async function (req, res, next) {
 
 router.get("/users", async function (req, res, next) {
   // res.render('index', { title: 'Express' });
-  const posts = await models.DBUser.find({});
+  const posts = await models.DBUser.find({}).sort({ createdAt: -1 });
   res.json(posts);
 });
 
@@ -251,6 +251,31 @@ router.get("/addCounter", async (req, res) => {
     );
   }
   await models.DBCounter.updateOne({ name: "posts" }, { counter: counter });
+  // const ini = ["Hi"];
+  // await models.DBPost.updateMany({}, { comparedTo: ini });
+  res.send("done with Hi");
+});
+
+router.get("/addCounterUser", async (req, res) => {
+  const postCounter = await models.DBCounter.findOne({ name: "users" });
+
+  const pCounter = postCounter
+    ? postCounter
+    : await new models.DBCounter({ name: "users" }).save();
+
+  let counter = 0;
+  // console.log(pCounter);
+  const posts = await models.DBUser.find({}).sort({ createdAt: +1 });
+  let result;
+  console.log(posts.length);
+  for (let post of posts) {
+    counter = counter + 1;
+    result = await models.DBUser.updateOne(
+      { _id: post._id },
+      { count: counter }
+    );
+  }
+  await models.DBCounter.updateOne({ name: "users" }, { counter: counter });
   // const ini = ["Hi"];
   // await models.DBPost.updateMany({}, { comparedTo: ini });
   res.send("done with Hi");
