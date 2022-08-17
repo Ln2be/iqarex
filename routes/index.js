@@ -159,7 +159,19 @@ router.get("/deletetracks", async (req, res, next) => {
 
 router.get("/deletechances", async (req, res, next) => {
   const tests = await models.DBChance.deleteMany({});
-  res.send(tests);
+  const tests2 = await models.DBTrack.deleteMany({});
+  const posts = await models.DBPost.updateMany(
+    {},
+    { trackcount: "", chancecount: "" }
+  );
+  // console.log(posts[posts.length - 1]);
+  // for (let post of posts) {
+  //   if (post.trackcount) {
+  //     await models.DBPost.updateOne({ count: post.count }, { trackcount: "" });
+  //   }
+  // }
+
+  res.send(posts);
 });
 
 router.get("/addhidden", async (req, res) => {
