@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var models = require("../lib/mongo");
 var fs = require("fs");
-const { DBPost } = require("../lib/mongo");
+const { DBPost, DBUser } = require("../lib/mongo");
 
 /* GET home page. */
 router.get("/posts", async function (req, res, next) {
@@ -291,6 +291,13 @@ router.get("/addCounterUser", async (req, res) => {
   // const ini = ["Hi"];
   // await models.DBPost.updateMany({}, { comparedTo: ini });
   res.send("done with Hi");
+});
+
+router.get("/changete", async (req, res) => {
+  const { count, tel } = req.query;
+
+  await DBUser.updateOne({ count: count }, { tel: tel });
+  res.send("ok");
 });
 
 module.exports = router;
