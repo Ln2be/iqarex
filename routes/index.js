@@ -3,6 +3,7 @@ var router = express.Router();
 var models = require("../lib/mongo");
 var fs = require("fs");
 const { DBPost, DBUser } = require("../lib/mongo");
+const { query } = require("express");
 
 /* GET home page. */
 router.get("/posts", async function (req, res, next) {
@@ -75,6 +76,30 @@ router.get("/rmbackups", async function (req, res, next) {
   res.json(posts);
 });
 
+router.get("/pushcount", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const posts = await models.DBCounter.updateOne(
+    { name: "posts" },
+    { counter: 600 }
+  );
+  res.json("changed");
+});
+
+router.get("/changecount", async function (req, res, next) {
+  // res.render('index', { title: 'Express' });
+  const qcount = req.query.count;
+  const counterC = await models.DBCounter.findOne({ name: "posts" });
+
+  const counter = counterC.counter + 1;
+
+  const post = await models.DBPost.updateOne(
+    { count: qcount },
+    { count: counter }
+  );
+
+  await models.DBCounter.updateOne({ name: "posts" }, { counter: counter });
+  res.json("changed");
+});
 // turn departement to departements. one user
 
 router.get("/convertdep", async function (req, res, next) {
